@@ -1,0 +1,39 @@
+{
+ "chart_name": "Tasks Created vs Completed",
+ "chart_type": "Report",
+ "creation": "2025-08-15 16:13:12.590575",
+ "currency": "INR",
+ "docstatus": 0,
+ "doctype": "Dashboard Chart",
+ "dynamic_filters_json": "{}",
+ "filters_json": "{}",
+ "group_by_type": "Count",
+ "idx": 0,
+ "is_public": 1,
+ "is_standard": 1,
+ "modified": "2025-08-15 16:13:22.859370",
+ "modified_by": "Administrator",
+ "module": "WorkBoard",
+ "name": "Tasks Created vs Completed",
+ "number_of_groups": 0,
+ "owner": "Administrator",
+ "report_name": "Tasks Created vs Completed",
+ "roles": [],
+ "show_values_over_chart": 1,
+ "time_interval": "Yearly",
+ "timeseries": 0,
+ "timespan": "Last Year",
+ "type": "Line",
+ "use_report_chart": 1,
+ "x_field": "date",
+ "y_axis": [
+  {
+   "color": "#ECAD4B",
+   "y_field": "created"
+  },
+  {
+   "color": "#29CD42",
+   "y_field": "completed"
+  }
+ ]
+}

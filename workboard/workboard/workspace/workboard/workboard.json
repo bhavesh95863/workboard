@@ -1,0 +1,87 @@
+{
+ "charts": [
+  {
+   "chart_name": "Tasks Created vs Completed",
+   "label": "Tasks Created vs Completed"
+  }
+ ],
+ "content": "[{\"id\":\"TGMSZ6hTxn\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Workboard</span>\",\"col\":12}},{\"id\":\"fouTmYYTkj\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Due Today\",\"col\":3}},{\"id\":\"jT8qNET6MV\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Overdue Tasks\",\"col\":3}},{\"id\":\"VSqhnrPxKH\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Total Open Tasks\",\"col\":3}},{\"id\":\"st9iXIzf03\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Completed Today\",\"col\":3}},{\"id\":\"OK9kwKaYxc\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Tasks Created vs Completed\",\"col\":12}},{\"id\":\"e7ghEe44KB\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Task Rule\",\"col\":3}},{\"id\":\"1zmXu-i-e9\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Task\",\"col\":3}},{\"id\":\"6h6KXA5XEW\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Task Checklist Template\",\"col\":3}},{\"id\":\"oTzkgOzsat\",\"type\":\"quick_list\",\"data\":{\"quick_list_name\":\"Overdue Task\",\"col\":4}},{\"id\":\"Hlx80uVY77\",\"type\":\"quick_list\",\"data\":{\"quick_list_name\":\"Open Task\",\"col\":4}}]",
+ "creation": "2025-08-15 14:42:24.523618",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "projects",
+ "idx": 0,
+ "indicator_color": "green",
+ "is_hidden": 0,
+ "label": "Workboard",
+ "links": [],
+ "modified": "2025-08-15 17:42:00.193870",
+ "modified_by": "Administrator",
+ "module": "WorkBoard",
+ "name": "Workboard",
+ "number_cards": [
+  {
+   "label": "Completed Today",
+   "number_card_name": "Completed Today"
+  },
+  {
+   "label": "Total Open Tasks",
+   "number_card_name": "Total Open Tasks"
+  },
+  {
+   "label": "Overdue Tasks",
+   "number_card_name": "Overdue Tasks"
+  },
+  {
+   "label": "Due Today",
+   "number_card_name": "Due Today"
+  }
+ ],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [
+  {
+   "document_type": "WB Task",
+   "label": "Open Task",
+   "quick_list_filter": "[[\"WB Task\",\"status\",\"=\",\"Open\",false]]"
+  },
+  {
+   "document_type": "WB Task",
+   "label": "Overdue Task",
+   "quick_list_filter": "[[\"WB Task\",\"status\",\"=\",\"Overdue\",false]]"
+  }
+ ],
+ "roles": [],
+ "sequence_id": 28.0,
+ "shortcuts": [
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Task Rule",
+   "link_to": "WB Task Rule",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Task",
+   "link_to": "WB Task",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Task Checklist Template",
+   "link_to": "WB Task Checklist Template",
+   "stats_filter": "[]",
+   "type": "DocType"
+  }
+ ],
+ "title": "Workboard"
+}

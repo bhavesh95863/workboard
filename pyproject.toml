@@ -1,5 +1,5 @@
 [project]
-name = "task_hub"
+name = "workboard"
 authors = [
     { name = "Nesscale Solutions Pvt Ltd", email = "bhavesh@nesscale.com"}
 ]
