@@ -34,6 +34,8 @@ For recurring work, **WB Task Rules** allow the creation of daily, weekly, month
 The included **WorkBoard Dashboard** offers at-a-glance visibility. Key performance indicators highlight open tasks, those due today, overdue items, and tasks completed within the day. Task lists and charts provide a historical view, such as a "Tasks Created vs Completed" trend over the past seven days. Quick access shortcuts allow navigation to both WB Task and WB Task Rule.
 
 ---
+<img width="1463" height="1100" alt="Screenshot 2025-08-15 at 7 19 18 PM" src="https://github.com/user-attachments/assets/cf566868-ab17-4240-b860-25f07d891140" />
+
 
 ## Installation
 ```bash
