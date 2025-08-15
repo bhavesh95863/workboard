@@ -1,0 +1,86 @@
+import frappe
+from frappe import _
+from frappe.utils import getdate, nowdate, add_days, cint,today,add_to_date
+from task_hub.utils import _create_th_task_from_rule,_context
+
+def trigger_daily_rules():
+	try:
+		_run_recurring_rules()
+		_run_offset_rules()
+	except Exception:
+		frappe.log_error(title=_("TaskHub Error"), message=frappe.get_traceback())
+
+def _run_recurring_rules():
+	rules = frappe.get_all("TH Task Rule", filters={"enabled": 1, "recurring": 1}, fields=["*"])
+	if not rules:
+		return
+	today_dt = getdate(today())
+	selected = []
+	for r in rules:
+		if r.frequency == "Daily":
+			selected.append(r)
+		elif r.frequency == "Weekly" and today_dt.strftime("%A") == r.day_of_week:
+			selected.append(r)
+		elif r.frequency == "Monthly" and cint(today_dt.day) == cint(r.date_of_month):
+			selected.append(r)
+		elif r.frequency == "Yearly" and cint(today_dt.day) == cint(r.date_of_month) and cint(today_dt.month) == cint(r.month_of_year):
+			selected.append(r)
+	for r in selected:
+		try:
+			_create_th_task_from_rule(r)
+			frappe.db.commit()
+		except Exception:
+			frappe.log_error(title=_("TaskHub Error"), message=frappe.get_traceback())
+
+def _run_offset_rules():
+	rules = frappe.get_all(
+		"TH Task Rule",
+		filters={
+			"enabled": 1,
+			"event": 1,
+			"based_on": ["in", ["Days Before", "Days After"]],
+		},
+		fields=["*"],
+	)
+	for r in rules:
+		for ref_doc in _docs_matching_offset_window(r):
+			try:
+				ctx = _context(ref_doc)
+				if r.condition and not frappe.safe_eval(r.condition, None, ctx):
+					continue
+				_create_th_task_from_rule(r, context=ctx)
+			except Exception:
+				frappe.log_error(title=_("TaskHub Error"), message=frappe.get_traceback())
+
+def _docs_matching_offset_window(rule):
+	out = []
+	if not rule.reference_doctype or not rule.reference_date:
+		return out
+	if not frappe.db.has_column(rule.reference_doctype, rule.reference_date):
+		return out
+	diff = cint(rule.days_before_or_after or 0)
+	if rule.based_on == "Days After":
+		diff = -diff
+	ref_date = add_to_date(nowdate(), days=diff)
+	start = f"{ref_date} 00:00:00.000000"
+	end = f"{ref_date} 23:59:59.000000"
+	names = frappe.get_all(
+		rule.reference_doctype,
+		fields=["name"],
+		filters=[[rule.reference_doctype, rule.reference_date, ">=", start], [rule.reference_doctype, rule.reference_date, "<=", end]],
+	)
+	for n in names:
+		out.append(frappe.get_doc(rule.reference_doctype, n.name))
+	return out
+
+def update_task_status():
+	names = frappe.get_all("TH Task", filters={"status": ["not in", ["Completed"]]}, pluck="name")
+	for name in names:
+		try:
+			d = frappe.get_doc("TH Task", name)
+			prev = d.status
+			d.validate()
+			if d.status != prev:
+				d.save(ignore_permissions=True)
+		except Exception:
+			frappe.log_error(title=_("TaskHub Status update error"), message=frappe.get_traceback())

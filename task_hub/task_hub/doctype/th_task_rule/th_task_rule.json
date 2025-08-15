@@ -1,0 +1,247 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "Task-Rule-.####",
+ "creation": "2025-08-15 12:31:55.533409",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "title",
+  "priority",
+  "has_checklist",
+  "checklist_template",
+  "column_break_xnrz",
+  "assign_from",
+  "assign_to",
+  "due_days",
+  "column_break_vrcc",
+  "recurring",
+  "event",
+  "enabled",
+  "section_break_qtih",
+  "description",
+  "recurring_settings_tab",
+  "frequency",
+  "column_break_esof",
+  "day_of_week",
+  "date_of_month",
+  "month_of_year",
+  "event_settings_tab",
+  "reference_doctype",
+  "condition",
+  "column_break_uhuf",
+  "based_on",
+  "reference_date",
+  "days_before_or_after",
+  "value_changed"
+ ],
+ "fields": [
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Title",
+   "reqd": 1
+  },
+  {
+   "fieldname": "priority",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Priority",
+   "options": "\nHigh\nMedium\nLow",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "has_checklist",
+   "fieldtype": "Check",
+   "label": "Has Checklist"
+  },
+  {
+   "fieldname": "column_break_xnrz",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_qtih",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Text Editor",
+   "label": "Description",
+   "reqd": 1
+  },
+  {
+   "fieldname": "assign_from",
+   "fieldtype": "Link",
+   "label": "Assign From",
+   "options": "User",
+   "reqd": 1
+  },
+  {
+   "fieldname": "assign_to",
+   "fieldtype": "Link",
+   "label": "Assign To",
+   "options": "User",
+   "reqd": 1
+  },
+  {
+   "depends_on": "has_checklist",
+   "fieldname": "checklist_template",
+   "fieldtype": "Link",
+   "label": "Checklist Template",
+   "mandatory_depends_on": "has_checklist",
+   "options": "TH Task Checklist Template"
+  },
+  {
+   "fieldname": "due_days",
+   "fieldtype": "Int",
+   "label": "Due Days",
+   "non_negative": 1,
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "recurring",
+   "fieldtype": "Check",
+   "label": "Recurring"
+  },
+  {
+   "default": "0",
+   "fieldname": "event",
+   "fieldtype": "Check",
+   "label": "Event"
+  },
+  {
+   "depends_on": "recurring",
+   "fieldname": "recurring_settings_tab",
+   "fieldtype": "Tab Break",
+   "label": "Recurring Settings"
+  },
+  {
+   "fieldname": "frequency",
+   "fieldtype": "Select",
+   "label": "Frequency",
+   "mandatory_depends_on": "recurring",
+   "options": "\nDaily\nWeekly\nMonthly\nYearly"
+  },
+  {
+   "fieldname": "column_break_esof",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.frequency == \"Weekly\" || doc.frequency == \"Yearly\"",
+   "fieldname": "day_of_week",
+   "fieldtype": "Select",
+   "label": "Day of Week",
+   "mandatory_depends_on": "eval:doc.frequency == \"Weekly\" || doc.frequency == \"Yearly\"",
+   "options": "\nMonday\nTuesday\nWednesday\nThursday\nFriday\nSaturday\nSunday"
+  },
+  {
+   "depends_on": "eval:doc.frequency == \"Monthly\" || doc.frequency == \"Yearly\"",
+   "fieldname": "date_of_month",
+   "fieldtype": "Select",
+   "label": "Date of Month",
+   "mandatory_depends_on": "eval:doc.frequency == \"Monthly\" || doc.frequency == \"Yearly\"",
+   "options": "\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n23\n24\n25\n26\n27\n28\n29\n30\n31"
+  },
+  {
+   "depends_on": "eval:doc.frequency == \"Yearly\"",
+   "fieldname": "month_of_year",
+   "fieldtype": "Select",
+   "label": "Month of Year",
+   "mandatory_depends_on": "eval:doc.frequency == \"Yearly\"",
+   "options": "\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12"
+  },
+  {
+   "depends_on": "event",
+   "fieldname": "event_settings_tab",
+   "fieldtype": "Tab Break",
+   "label": "Event Settings"
+  },
+  {
+   "fieldname": "reference_doctype",
+   "fieldtype": "Link",
+   "label": "Reference Doctype",
+   "mandatory_depends_on": "event",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "condition",
+   "fieldtype": "Code",
+   "label": "Condition"
+  },
+  {
+   "fieldname": "column_break_uhuf",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "based_on",
+   "fieldtype": "Select",
+   "label": "Based On",
+   "mandatory_depends_on": "event",
+   "options": "\nNew\nSave\nSubmit\nCancel\nValue Change\nDays After\nDays Before"
+  },
+  {
+   "depends_on": "eval:doc.based_on == \"Days After\" || doc.based_on == \"Days Before\"",
+   "description": "Create task if date matches this field's value",
+   "fieldname": "reference_date",
+   "fieldtype": "Select",
+   "label": "Reference Date",
+   "mandatory_depends_on": "eval:doc.based_on == \"Days After\" || doc.based_on == \"Days Before\""
+  },
+  {
+   "depends_on": "eval:doc.based_on == \"Days After\" || doc.based_on == \"Days Before\"",
+   "description": "Create task days before or after the reference date",
+   "fieldname": "days_before_or_after",
+   "fieldtype": "Int",
+   "label": "Days Before or After",
+   "mandatory_depends_on": "eval:doc.based_on == \"Days After\" || doc.based_on == \"Days Before\""
+  },
+  {
+   "depends_on": "eval:doc.based_on == \"Value Change\"",
+   "description": "Create task if this field's value changes",
+   "fieldname": "value_changed",
+   "fieldtype": "Select",
+   "label": "Value Changed",
+   "mandatory_depends_on": "eval:doc.based_on == \"Value Change\""
+  },
+  {
+   "fieldname": "column_break_vrcc",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "label": "Enabled"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-08-15 13:01:22.969830",
+ "modified_by": "Administrator",
+ "module": "Task Hub",
+ "name": "TH Task Rule",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

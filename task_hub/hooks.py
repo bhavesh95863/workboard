@@ -137,16 +137,22 @@ app_license = "agpl-3.0"
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
+doc_events = {
+	"*": {
+		"after_insert": "task_hub.events.handlers.create_task_for_event",
+		"after_save": "task_hub.events.handlers.create_task_for_event",
+		"on_submit": "task_hub.events.handlers.create_task_for_event",
+		"on_cancel": "task_hub.events.handlers.create_task_for_event",
+		"on_change": "task_hub.events.handlers.create_task_for_event",
+	}
+}
 
 # Scheduled Tasks
 # ---------------
+
+scheduler_events = {
+	"daily": ["task_hub.background_jobs.trigger_daily_rules","task_hub.background_jobs.update_task_status"]
+}
 
 # scheduler_events = {
 # 	"all": [
