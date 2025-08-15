@@ -5,3 +5,5 @@
 tags
 node_modules
 __pycache__
+seed_workboard.py
+.env

@@ -137,22 +137,22 @@ app_license = "agpl-3.0"
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"after_insert": "workboard.events.handlers.create_task_for_event",
-# 		"after_save": "workboard.events.handlers.create_task_for_event",
-# 		"on_submit": "workboard.events.handlers.create_task_for_event",
-# 		"on_cancel": "workboard.events.handlers.create_task_for_event",
-# 		"on_change": "workboard.events.handlers.create_task_for_event",
-# 	}
-# }
+doc_events = {
+	"*": {
+		"after_insert": "workboard.events.handlers.create_task_for_event",
+		"after_save": "workboard.events.handlers.create_task_for_event",
+		"on_submit": "workboard.events.handlers.create_task_for_event",
+		"on_cancel": "workboard.events.handlers.create_task_for_event",
+		"on_change": "workboard.events.handlers.create_task_for_event",
+	}
+}
 
 # Scheduled Tasks
 # ---------------
 
-# scheduler_events = {
-# 	"daily": ["workboard.background_jobs.trigger_daily_rules","workboard.background_jobs.update_task_status"]
-# }
+scheduler_events = {
+	"daily": ["workboard.background_jobs.trigger_daily_rules","workboard.background_jobs.update_task_status"]
+}
 
 # scheduler_events = {
 # 	"all": [

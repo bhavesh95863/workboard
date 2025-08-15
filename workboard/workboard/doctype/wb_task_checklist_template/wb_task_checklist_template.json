@@ -8,7 +8,7 @@
  "field_order": [
   "checklist_name",
   "section_break_tokw",
-  "th_task_checklist_template_details"
+  "wb_task_checklist_template_details"
  ],
  "fields": [
   {
@@ -22,16 +22,16 @@
    "fieldtype": "Section Break"
   },
   {
-   "fieldname": "th_task_checklist_template_details",
+   "fieldname": "wb_task_checklist_template_details",
    "fieldtype": "Table",
-   "label": "TH Task Checklist Template Details",
+   "label": "WB Task Checklist Template Details",
    "options": "WB Task Checklist Template Details"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-08-15 17:31:55.545071",
+ "modified": "2025-08-15 18:50:20.780139",
  "modified_by": "Administrator",
  "module": "WorkBoard",
  "name": "WB Task Checklist Template",
