@@ -27,6 +27,7 @@ It provides a structured way to create, assign, and track tasks without unnecess
 WorkBoard is designed to support both routine and event-based work, making it suitable for day-to-day operations and process automation.
 
 ---
+You can refer to the following [YouTube video](https://youtu.be/_GOTp1-YgYY?si=b1uWGAWhmISpVVgh) for the quick tour of the features.
 
 ## Features
 
