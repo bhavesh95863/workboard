@@ -17,7 +17,7 @@ It lets you create, assign, and track **manual**, **recurring**, and **event-bas
   - Define event-based tasks triggered by specific document actions (e.g., on new User creation).  
   - Condition-based creation using Frappe’s safe_eval context.  
 
-- **Workspace: TaskHub Dashboard**  
+- **Workspace: Workboard**  
   - KPI Cards: Open Tasks, Due Today, Overdue, Completed Today.  
   - Lists: My Open Tasks, Due Today, Overdue, Completed (last 7 days).  
   - Charts: Tasks Created vs Completed (last 7 days).  
