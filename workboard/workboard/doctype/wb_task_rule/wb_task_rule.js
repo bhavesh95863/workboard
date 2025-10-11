@@ -33,7 +33,7 @@ frappe.ui.form.on('WB Task Rule', {
 
 			let fields = frappe.get_doc('DocType', frm.doc.reference_doctype).fields;
 			let options = $.map(fields, function (d) {
-				return in_list(frappe.model.no_value_type, d.fieldtype)
+				return frappe.model.no_value_type.includes(d.fieldtype)
 					? null : get_select_options(d);
 			});
 

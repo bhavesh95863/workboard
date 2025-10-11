@@ -50,7 +50,8 @@
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Status",
-   "options": "\nOpen\nIn Progress\nCompleted\nOverdue",
+   "options": "\nOpen\nCompleted\nOverdue",
+   "read_only": 1,
    "reqd": 1
   },
   {
@@ -160,7 +161,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-08-15 17:31:46.902879",
+ "modified": "2025-08-15 23:48:19.034480",
  "modified_by": "Administrator",
  "module": "WorkBoard",
  "name": "WB Task",

@@ -2,6 +2,7 @@
 # For license information, please see license.txt
 
 import frappe
+from frappe import _
 from datetime import date, timedelta
 
 def execute(filters=None):
@@ -9,9 +10,9 @@ def execute(filters=None):
     days = int(filters.get("days") or 7)
 
     cols = [
-        {"label": "Date", "fieldname": "date", "fieldtype": "Date", "width": 110},
-        {"label": "Created", "fieldname": "created", "fieldtype": "Int", "width": 100},
-        {"label": "Completed", "fieldname": "completed", "fieldtype": "Int", "width": 110},
+        {"label": _("Date"), "fieldname": "date", "fieldtype": "Date", "width": 110},
+        {"label": _("Created"), "fieldname": "created", "fieldtype": "Int", "width": 100},
+        {"label": _("Completed"), "fieldname": "completed", "fieldtype": "Int", "width": 110},
     ]
 
     end = date.today()
