@@ -6,9 +6,10 @@ from frappe import _
 from frappe.model.document import Document
 from frappe.utils import getdate, nowdate
 
+
 class WBTask(Document):
 	def validate(self):
-		if self.status not in ("Open","Completed", "Overdue"):
+		if self.status not in ("Open", "Completed", "Overdue"):
 			frappe.throw(_("Invalid Status"))
 		self.validate_overdue()
 		self.enforce_checklist()
@@ -41,7 +42,9 @@ class WBTask(Document):
 			if not self.date_of_completion:
 				self.date_of_completion = nowdate()
 			if self.due_date and self.date_of_completion:
-				self.timeliness = "Ontime" if getdate(self.date_of_completion) <= getdate(self.due_date) else "Late"
+				self.timeliness = (
+					"Ontime" if getdate(self.date_of_completion) <= getdate(self.due_date) else "Late"
+				)
 		else:
 			self.timeliness = None
 
@@ -52,7 +55,7 @@ class WBTask(Document):
 		self.enforce_checklist()
 		self.status = "Completed"
 		self.save(ignore_permissions=True)
-	
+
 	@frappe.whitelist()
 	def fetch_checklist(self):
 		self.wb_task_checklist_details = []
@@ -60,6 +63,4 @@ class WBTask(Document):
 			return
 		checklist_doc = frappe.get_doc("WB Task Checklist Template", self.checklist_template)
 		for row in checklist_doc.wb_task_checklist_template_details:
-			self.append("wb_task_checklist_details", {
-				"checklist_item": row.checklist_item
-			})
+			self.append("wb_task_checklist_details", {"checklist_item": row.checklist_item})

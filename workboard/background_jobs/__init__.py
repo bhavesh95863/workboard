@@ -1,7 +1,9 @@
 import frappe
 from frappe import _
-from frappe.utils import getdate, nowdate, add_days, cint,today,add_to_date
-from workboard.utils import _context,_create_task_from_rule
+from frappe.utils import add_days, add_to_date, cint, getdate, nowdate, today
+
+from workboard.utils import _context, _create_task_from_rule
+
 
 def trigger_daily_rules():
 	try:
@@ -9,6 +11,7 @@ def trigger_daily_rules():
 		_run_offset_rules()
 	except Exception:
 		frappe.log_error(title=_("WorkBoard Error"), message=frappe.get_traceback())
+
 
 def _run_recurring_rules():
 	rules = frappe.get_all("WB Task Rule", filters={"enabled": 1, "recurring": 1}, fields=["*"])
@@ -23,7 +26,11 @@ def _run_recurring_rules():
 			selected.append(r)
 		elif r.frequency == "Monthly" and cint(today_dt.day) == cint(r.date_of_month):
 			selected.append(r)
-		elif r.frequency == "Yearly" and cint(today_dt.day) == cint(r.date_of_month) and cint(today_dt.month) == cint(r.month_of_year):
+		elif (
+			r.frequency == "Yearly"
+			and cint(today_dt.day) == cint(r.date_of_month)
+			and cint(today_dt.month) == cint(r.month_of_year)
+		):
 			selected.append(r)
 	for r in selected:
 		try:
@@ -31,6 +38,7 @@ def _run_recurring_rules():
 			frappe.db.commit()
 		except Exception:
 			frappe.log_error(title=_("WorkBoard Error"), message=frappe.get_traceback())
+
 
 def _run_offset_rules():
 	rules = frappe.get_all(
@@ -52,6 +60,7 @@ def _run_offset_rules():
 			except Exception:
 				frappe.log_error(title=_("WorkBoard Error"), message=frappe.get_traceback())
 
+
 def _docs_matching_offset_window(rule):
 	out = []
 	if not rule.reference_doctype or not rule.reference_date:
@@ -67,11 +76,15 @@ def _docs_matching_offset_window(rule):
 	names = frappe.get_all(
 		rule.reference_doctype,
 		fields=["name"],
-		filters=[[rule.reference_doctype, rule.reference_date, ">=", start], [rule.reference_doctype, rule.reference_date, "<=", end]],
+		filters=[
+			[rule.reference_doctype, rule.reference_date, ">=", start],
+			[rule.reference_doctype, rule.reference_date, "<=", end],
+		],
 	)
 	for n in names:
 		out.append(frappe.get_doc(rule.reference_doctype, n.name))
 	return out
+
 
 def update_task_status():
 	names = frappe.get_all("WB Task", filters={"status": ["not in", ["Completed"]]}, pluck="name")
