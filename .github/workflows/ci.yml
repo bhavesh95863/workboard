@@ -14,7 +14,6 @@ concurrency:
 jobs:
   tests:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
     strategy:
       fail-fast: false
     name: Server
@@ -29,7 +28,7 @@ jobs:
         ports:
           - 11000:6379
       mariadb:
-        image: mariadb:10.11
+        image: mariadb:10.6
         env:
           MYSQL_ROOT_PASSWORD: root
         ports:
@@ -43,23 +42,18 @@ jobs:
       - name: Find tests
         run: |
           echo "Finding tests"
-          if grep -rn "def test" workboard/ > /dev/null 2>&1; then
-            echo "Found test methods"
-          else
-            echo "No test methods found - this is OK for now"
-          fi
+          grep -rn "def test" > /dev/null
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v4
         with:
-          python-version: '3.11'
+          python-version: '3.10'
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
           node-version: 18
           check-latest: true
-          cache: 'yarn'
 
       - name: Cache pip
         uses: actions/cache@v4
@@ -84,34 +78,24 @@ jobs:
 
       - name: Install MariaDB Client
         run: |
-          sudo apt-get update
-          sudo apt-get install mariadb-client-10.6
+          sudo apt update
+          sudo apt-get install mariadb-client
 
       - name: Setup
         run: |
-          echo "Installing frappe-bench..."
           pip install frappe-bench
-          echo "Initializing bench..."
           bench init --skip-redis-config-generation --skip-assets --python "$(which python)" ~/frappe-bench
-          echo "Setting up MariaDB..."
           mariadb --host 127.0.0.1 --port 3306 -u root -proot -e "SET GLOBAL character_set_server = 'utf8mb4'"
           mariadb --host 127.0.0.1 --port 3306 -u root -proot -e "SET GLOBAL collation_server = 'utf8mb4_unicode_ci'"
-          echo "✅ Setup completed successfully"
 
       - name: Install
         working-directory: /home/runner/frappe-bench
         run: |
-          echo "Getting workboard app..."
           bench get-app workboard $GITHUB_WORKSPACE
-          echo "Setting up requirements..."
           bench setup requirements --dev
-          echo "Creating new site..."
           bench new-site --db-root-password root --admin-password admin test_site
-          echo "Installing workboard app..."
           bench --site test_site install-app workboard
-          echo "Building assets..."
           bench build
-          echo "✅ Installation completed successfully"
         env:
           CI: 'Yes'
 
@@ -119,12 +103,6 @@ jobs:
         working-directory: /home/runner/frappe-bench
         run: |
           bench --site test_site set-config allow_tests true
-          if grep -rn "def test" $GITHUB_WORKSPACE/workboard/ > /dev/null 2>&1; then
-            echo "Running tests..."
-            bench --site test_site run-tests --app workboard
-          else
-            echo "No test methods found, skipping test execution"
-            echo "✅ CI setup verified successfully"
-          fi
+          bench --site test_site run-tests --app workboard
         env:
           TYPE: server
