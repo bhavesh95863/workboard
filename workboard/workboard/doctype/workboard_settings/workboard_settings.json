@@ -1,0 +1,50 @@
+{
+ "actions": [],
+ "creation": "2026-01-04 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "task_completion_section",
+  "only_assignee_can_complete",
+  "workboard_admin_role"
+ ],
+ "fields": [
+  {
+   "fieldname": "task_completion_section",
+   "fieldtype": "Section Break",
+   "label": "Task Completion Settings"
+  },
+  {
+   "default": "0",
+   "description": "If enabled, only the assigned person (Assign To) can mark manual tasks as complete. If disabled, both Assign From and Assign To can mark tasks complete.",
+   "fieldname": "only_assignee_can_complete",
+   "fieldtype": "Check",
+   "label": "Only Assignee Can Mark Complete"
+  },
+  {
+   "description": "Users with this role can mark any task as Done or Complete regardless of assignment",
+   "fieldname": "workboard_admin_role",
+   "fieldtype": "Link",
+   "label": "Workboard Admin Role",
+   "options": "Role"
+  }
+ ],
+ "issingle": 1,
+ "links": [],
+ "modified": "2026-01-04 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "WorkBoard",
+ "name": "WorkBoard Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "read": 1,
+   "role": "System Manager",
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

@@ -24,8 +24,18 @@ def _run_recurring_rules():
 			selected.append(r)
 		elif r.frequency == "Weekly" and today_dt.strftime("%A") == r.day_of_week:
 			selected.append(r)
+		elif r.frequency == "Fortnightly" and today_dt.strftime("%A") == r.day_of_week:
+			# Check if it's a fortnightly occurrence (every 14 days)
+			# We use a simple check: if the day number is in the first or third week of the month
+			day_of_month = today_dt.day
+			if (day_of_month <= 7) or (15 <= day_of_month <= 21):
+				selected.append(r)
 		elif r.frequency == "Monthly" and cint(today_dt.day) == cint(r.date_of_month):
 			selected.append(r)
+		elif r.frequency == "Quarterly" and cint(today_dt.day) == cint(r.date_of_month):
+			# Quarterly: every 3 months (January, April, July, October)
+			if today_dt.month in [1, 4, 7, 10]:
+				selected.append(r)
 		elif (
 			r.frequency == "Yearly"
 			and cint(today_dt.day) == cint(r.date_of_month)

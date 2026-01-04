@@ -31,13 +31,43 @@ You can refer to the following [YouTube video](https://youtu.be/_GOTp1-YgYY?si=b
 
 ## Features
 
-- **Direct Task Assignment** – Assign tasks from one user to another.
+### Task Management
+- **Direct Task Assignment** – Assign tasks from one user to another with clear ownership.
+- **Time-Based Tasks** – Set time limits in minutes for tasks that need to be completed within hours, not days.
+- **Two-Step Approval Workflow** – Tasks can be marked as "Done" by the assignee and then "Completed" by the assigner for quality control.
 - **Optional Checklists** – Tasks can include checklists, ensuring they are only marked complete once all items are done.
-- **Timeliness Tracking** – Automatically classify tasks as "On Time" or "Late".
-- **Recurring Task Rules** – Create daily, weekly, monthly, or yearly recurring tasks.
+- **Timeliness Tracking** – Automatically classify tasks as "On Time" or "Late" based on due dates or time limits.
+
+### Automation & Rules
+- **Recurring Task Rules** – Create recurring tasks with multiple frequencies:
+  - Daily
+  - Weekly
+  - Fortnightly (bi-weekly - runs on weeks 1 and 3 of each month)
+  - Monthly
+  - Quarterly (runs in January, April, July, and October)
+  - Yearly
 - **Event-Triggered Tasks** – Generate tasks automatically based on system events using `safe_eval` conditions.
-- **Dashboard Insights** – View open, due today, overdue, and completed tasks, along with historical trends such as "Tasks Created vs Completed".
-- **Quick Access** – Navigate directly to WB Task and WB Task Rule from the dashboard.
+- **Automatic Administrator Assignment** – Recurring and event-based tasks automatically assign from "Administrator" for system-generated tasks.
+
+### Permissions & Settings
+- **WorkBoard Settings** – Global configuration for task completion permissions:
+  - Control whether only assignees can mark tasks complete
+  - Define a Workboard Admin Role that can bypass all restrictions
+- **Flexible Permissions** – Assigners can optionally mark tasks complete based on settings.
+
+### Dashboard & Insights
+- **Personalized Dashboard** – Each user sees only their own tasks:
+  - **My Open Tasks** – Count of tasks assigned to you that are still open
+  - **My Overdue Tasks** – Tasks past their due date
+  - **My Tasks Due Today** – Tasks due today
+  - **My Today's Tasks** – Tasks created today
+  - **My Completed Today** – Tasks you completed today
+  - **Tasks Awaiting My Approval** – Manual tasks marked "Done" by assignees waiting for your approval
+- **Historical Trends** – View "Tasks Created vs Completed" chart over time.
+- **Quick Lists** – Direct access to:
+  - Open Tasks assigned to you
+  - Overdue Tasks assigned to you
+  - Tasks Awaiting Approval (tasks marked "Done" by your team members)
 
 ---
 
@@ -56,3 +86,77 @@ bench get-app https://github.com/bhavesh95863/workboard
 
 # Install on your site
 bench --site yoursite install-app workboard
+
+---
+
+## Configuration
+
+### WorkBoard Settings
+Navigate to **WorkBoard Settings** to configure global task management behavior:
+
+1. **Only Assignee Can Complete** – When enabled, only the person assigned to a task can mark it complete. When disabled, the assigner can also mark tasks complete.
+2. **Workboard Admin Role** – Select a role (e.g., "Workboard Admin") that can bypass all completion restrictions and manage any task.
+
+### Creating a Workboard Admin
+1. Create a new role: **Workboard Admin**
+2. Set this role in WorkBoard Settings
+3. Assign this role to users who need full task management access
+
+---
+
+## Usage
+
+### Creating Manual Tasks
+1. Go to **WB Task** from the WorkBoard workspace
+2. Fill in:
+   - **Assign To** – User who will complete the task
+   - **Assign From** – User assigning the task (defaults to you)
+   - **Title** & **Description**
+   - **Due Date** – When the task should be completed
+   - **Depends on Time** (optional) – Enable for time-sensitive tasks:
+     - Set **Time Limit in Minutes** for tasks due within hours
+     - System calculates **End Datetime** automatically
+   - **Checklist** (optional) – Add checklist items for multi-step tasks
+3. Save to create the task
+
+### Two-Step Approval Workflow
+For tasks requiring quality control:
+
+1. **Assignee** completes the work and clicks **Mark Done**
+2. **Assigner** receives notification via "Tasks Awaiting My Approval"
+3. **Assigner** reviews the work and clicks **Mark Completed**
+
+*Note: This workflow applies to manual tasks. Configure in WorkBoard Settings.*
+
+### Creating Recurring Tasks
+1. Go to **WB Task Rule** from the WorkBoard workspace
+2. Set:
+   - **Task Type** = Recurring
+   - **Frequency** – Daily, Weekly, Fortnightly, Monthly, Quarterly, or Yearly
+   - **Title Template** – Use `{date}` placeholder for dynamic dates
+   - **Assign To** – User who will receive the recurring tasks
+   - **Depends on Time** (optional) – For recurring tasks with hourly deadlines
+3. Enable the rule – Tasks will be created automatically by the scheduler
+
+### Creating Event-Based Tasks
+1. Go to **WB Task Rule** from the WorkBoard workspace
+2. Set:
+   - **Task Type** = Event
+   - **Document Type** – DocType to monitor (e.g., "Sales Order")
+   - **Event** – When to trigger (After Insert, On Update, etc.)
+   - **Condition** – Python expression using `safe_eval` (e.g., `doc.status == "Pending"`)
+   - **Offset Days** (optional) – Create task X days after the event
+3. Enable the rule – Tasks will be created when events occur
+
+### Dashboard Usage
+Your personalized dashboard shows:
+- **Number Cards** – Quick counts of your tasks by status
+- **Tasks Awaiting My Approval** – Click to review and complete tasks marked "Done"
+- **Quick Lists** – Direct access to open and overdue tasks
+- **Chart** – Historical view of task creation vs completion trends
+
+---
+
+## License
+
+This app is licensed under AGPLv3.

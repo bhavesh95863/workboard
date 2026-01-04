@@ -12,6 +12,8 @@
   "column_break_xnrz",
   "status",
   "due_date",
+  "depends_on_time",
+  "end_datetime",
   "date_of_completion",
   "timeliness",
   "section_break_qtih",
@@ -50,7 +52,7 @@
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Status",
-   "options": "\nOpen\nCompleted\nOverdue",
+   "options": "\nOpen\nDone\nCompleted\nOverdue",
    "read_only": 1,
    "reqd": 1
   },
@@ -70,6 +72,34 @@
    "in_list_view": 1,
    "label": "Due Date",
    "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "depends_on_time",
+   "fieldtype": "Check",
+   "label": "Time-Based Task"
+  },
+  {
+   "depends_on": "depends_on_time",
+   "description": "Task must be completed by this date and time",
+   "fieldname": "end_datetime",
+   "fieldtype": "Datetime",
+   "label": "End Date & Time",
+   "mandatory_depends_on": "depends_on_time"
+  },
+  {
+   "depends_on": "eval:doc.status == \"Completed\"",
+   "fieldname": "date_of_completion",
+   "fieldtype": "Date",
+   "label": "Date of Completion",
+   "read_only": 1
+  },
+  {
+   "fieldname": "timeliness",
+   "fieldtype": "Select",
+   "label": "Timeliness",
+   "options": "\nOntime\nLate",
+   "read_only": 1
   },
   {
    "fieldname": "section_break_qtih",
@@ -136,20 +166,6 @@
    "label": "Checklist Template",
    "mandatory_depends_on": "eval:doc.has_checklist == 1",
    "options": "WB Task Checklist Template"
-  },
-  {
-   "depends_on": "eval:doc.status == \"Completed\"",
-   "fieldname": "date_of_completion",
-   "fieldtype": "Date",
-   "label": "Date of Completion",
-   "read_only": 1
-  },
-  {
-   "fieldname": "timeliness",
-   "fieldtype": "Select",
-   "label": "Timeliness",
-   "options": "\nOntime\nLate",
-   "read_only": 1
   },
   {
    "fieldname": "wb_task_checklist_details",

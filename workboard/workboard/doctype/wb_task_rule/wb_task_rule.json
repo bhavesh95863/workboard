@@ -14,6 +14,8 @@
   "assign_from",
   "assign_to",
   "due_days",
+  "depends_on_time",
+  "time_limit_in_minutes",
   "column_break_vrcc",
   "recurring",
   "event",
@@ -72,11 +74,12 @@
    "reqd": 1
   },
   {
+   "description": "Leave empty for recurring/event tasks to use 'Administrator'",
    "fieldname": "assign_from",
    "fieldtype": "Link",
    "label": "Assign From",
-   "options": "User",
-   "reqd": 1
+   "mandatory_depends_on": "eval:!doc.recurring && !doc.event",
+   "options": "User"
   },
   {
    "fieldname": "assign_to",
@@ -102,6 +105,21 @@
   },
   {
    "default": "0",
+   "fieldname": "depends_on_time",
+   "fieldtype": "Check",
+   "label": "Time-Based Task"
+  },
+  {
+   "depends_on": "depends_on_time",
+   "description": "Time limit in minutes from task creation",
+   "fieldname": "time_limit_in_minutes",
+   "fieldtype": "Int",
+   "label": "Time Limit (Minutes)",
+   "mandatory_depends_on": "depends_on_time",
+   "non_negative": 1
+  },
+  {
+   "default": "0",
    "fieldname": "recurring",
    "fieldtype": "Check",
    "label": "Recurring"
@@ -123,26 +141,26 @@
    "fieldtype": "Select",
    "label": "Frequency",
    "mandatory_depends_on": "recurring",
-   "options": "\nDaily\nWeekly\nMonthly\nYearly"
+   "options": "\nDaily\nWeekly\nFortnightly\nMonthly\nQuarterly\nYearly"
   },
   {
    "fieldname": "column_break_esof",
    "fieldtype": "Column Break"
   },
   {
-   "depends_on": "eval:doc.frequency == \"Weekly\" || doc.frequency == \"Yearly\"",
+   "depends_on": "eval:doc.frequency == \"Weekly\" || doc.frequency == \"Fortnightly\" || doc.frequency == \"Yearly\"",
    "fieldname": "day_of_week",
    "fieldtype": "Select",
    "label": "Day of Week",
-   "mandatory_depends_on": "eval:doc.frequency == \"Weekly\" || doc.frequency == \"Yearly\"",
+   "mandatory_depends_on": "eval:doc.frequency == \"Weekly\" || doc.frequency == \"Fortnightly\" || doc.frequency == \"Yearly\"",
    "options": "\nMonday\nTuesday\nWednesday\nThursday\nFriday\nSaturday\nSunday"
   },
   {
-   "depends_on": "eval:doc.frequency == \"Monthly\" || doc.frequency == \"Yearly\"",
+   "depends_on": "eval:doc.frequency == \"Monthly\" || doc.frequency == \"Quarterly\" || doc.frequency == \"Yearly\"",
    "fieldname": "date_of_month",
    "fieldtype": "Select",
    "label": "Date of Month",
-   "mandatory_depends_on": "eval:doc.frequency == \"Monthly\" || doc.frequency == \"Yearly\"",
+   "mandatory_depends_on": "eval:doc.frequency == \"Monthly\" || doc.frequency == \"Quarterly\" || doc.frequency == \"Yearly\"",
    "options": "\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n23\n24\n25\n26\n27\n28\n29\n30\n31"
   },
   {

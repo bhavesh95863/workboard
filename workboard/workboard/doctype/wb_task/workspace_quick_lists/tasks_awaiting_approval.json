@@ -1,0 +1,32 @@
+{
+ "creation": "2024-01-26 12:00:00.000000",
+ "docstatus": 0,
+ "doctype": "Workspace Quick List",
+ "document_type": "WB Task",
+ "dynamic_filters_json": "[[\"WB Task\",\"assign_from\",\"=\",\"frappe.session.user\"]]",
+ "filters": [
+  [
+   "WB Task",
+   "status",
+   "=",
+   "Done",
+   false
+  ],
+  [
+   "WB Task",
+   "task_type",
+   "=",
+   "Manual",
+   false
+  ]
+ ],
+ "idx": 0,
+ "label": "Tasks Awaiting Approval",
+ "modified": "2024-01-26 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Workboard",
+ "name": "Tasks Awaiting Approval",
+ "owner": "Administrator",
+ "quick_list_name": "Tasks Awaiting Approval",
+ "stats_filter": "{\"status\": \"Done\"}"
+}
