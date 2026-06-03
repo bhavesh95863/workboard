@@ -7,7 +7,7 @@ import frappe
 from frappe import _
 
 
-def execute(filters=None):
+def execute(filters: dict | None = None):
 	filters = filters or {}
 	days = int(filters.get("days") or 7)
 

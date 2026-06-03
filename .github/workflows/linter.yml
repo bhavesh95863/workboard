@@ -24,15 +24,18 @@ jobs:
         with:
           python-version: '3.10'
           cache: pip
-      
-      - name: Install Python linting tools
-        run: |
-          pip install ruff pre-commit
 
-      - name: Run Python linting
-        run: |
-          ruff check .
-          ruff format --check .
+      - name: Install pre-commit
+        run: pip install pre-commit
+
+      - name: Cache pre-commit environments
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pre-commit
+          key: ${{ runner.os }}-pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
+
+      - name: Run pre-commit (ruff lint, ruff format, file checks)
+        run: pre-commit run --all-files --show-diff-on-failure
 
       - name: Download Semgrep rules
         run: git clone --depth 1 https://github.com/frappe/semgrep-rules.git frappe-semgrep-rules

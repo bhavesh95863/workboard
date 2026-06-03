@@ -1,9 +1,8 @@
 # Copyright (c) 2025, Nesscale Solutions Pvt Ltd and Contributors
 # See license.txt
 
-# import frappe
-from frappe.tests.utils import FrappeTestCase
+from frappe.tests import IntegrationTestCase
 
 
-class TestWBTaskChecklistTemplate(FrappeTestCase):
+class TestWBTaskChecklistTemplate(IntegrationTestCase):
 	pass
